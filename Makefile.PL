@@ -6,17 +6,10 @@ name 'Mousse';
 
 perl_version '5.008003';
 
-
-# NOTE Set this to 1 to build Mousse then set back to zero!
-my $build_new_mousse = 0;
-if ($build_new_mousse) {
+if ($ENV{MOUSSE_AUTHOR}) {
     warn "\n\n*** WARNING *** Makefile.PL set to build new Mousse!\n\n";
-    use_mousse_dev 'Mousse';
+    use_mousse_dev('Mousse');
 }
-else {
-    use_mousse 'Mousse';
-}
-
 
 {
     local $SIG{__WARN__} = sub {1};
@@ -28,6 +21,6 @@ readme_from 'lib/Mousse.pod';
 ack_xxx;
 version_check;
 
-clean_files 't/lib/Foo/Mousse.pm', 't/inc', 'MANIFEST';
+clean_files 't/lib/Foo/Mousse.pm', 't/lib/Foo/Bar/', 't/inc', 'MANIFEST';
 
 WriteAll;
