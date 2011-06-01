@@ -1,23 +1,31 @@
 #line 1
+##
+# name:      Module::Install::AckXXX
+# abstract:  Warn Author About XXX.pm
+# author:    Ingy döt Net <ingy@cpan.org>
+# license:   perl
+# copyright: 2010, 2011
+
 package Module::Install::AckXXX;
+use 5.008003;
 use strict;
 use warnings;
-use 5.008003;
 
-use Module::Install::Base;
+my $requires = "
+use App::Ack 1.94 ();
+use Capture::Tiny 0.10 ();
+";
 
-use vars qw($VERSION @ISA);
-BEGIN {
-    $VERSION = '0.11';
-    @ISA     = 'Module::Install::Base';
-}
+use base 'Module::Install::Base';
+our $VERSION = '0.15';
+our $AUTHOR_ONLY = 1;
 
 sub ack_xxx {
     my $self = shift;
     return unless $self->is_admin;
 
     require Capture::Tiny;
-    sub ack { system "ack '^\\s*use XXX\\b'"; }
+    sub ack { system "ack -G '\\.(pm|t|PL)\$' '^\\s*use XXX\\b'"; }
     my $output = Capture::Tiny::capture_merged(\&ack);
     $self->_report($output) if $output;
 }
@@ -37,6 +45,3 @@ $output
 
 1;
 
-=encoding utf8
-
-#line 82

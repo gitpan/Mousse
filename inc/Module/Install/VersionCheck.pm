@@ -1,18 +1,23 @@
 #line 1
+##
+# name:      Module::Install::VersionCheck
+# abstract:  Show Author the Current Versions
+# author:    Ingy döt Net <ingy@cpan.org>
+# license:   perl
+# copyright: 2010, 2011
+
 package Module::Install::VersionCheck;
+use 5.008003;
 use strict;
 use warnings;
-use 5.008003;
 
 use Module::Install::Base;
+use base 'Module::Install::Base';
+
+our $VERSION = '0.13';
+our $AUTHOR_ONLY = 1;
 
 my $DEFAULT = '0.00';
-
-use vars qw($VERSION @ISA);
-BEGIN {
-    $VERSION = '0.11';
-    @ISA     = 'Module::Install::Base';
-}
 
 sub version_check {
     my $self = shift;
@@ -69,6 +74,3 @@ sub _report {
 
 1;
 
-=encoding utf8
-
-#line 107

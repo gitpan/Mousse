@@ -1,16 +1,20 @@
 #line 1
+##
+# name:      Module::Install::ManifestSkip
+# abstract:  Generate a MANIFEST.SKIP file
+# author:    Ingy döt Net <ingy@cpan.org>
+# license:   perl
+# copyright: 2010, 2011
+
 package Module::Install::ManifestSkip;
+use 5.008003;
 use strict;
 use warnings;
-use 5.008003;
 
-use Module::Install::Base;
+use base 'Module::Install::Base';
 
-use vars qw($VERSION @ISA);
-BEGIN {
-    $VERSION = '0.14';
-    @ISA     = 'Module::Install::Base';
-}
+our $VERSION = '0.18';
+our $AUTHOR_ONLY = 1;
 
 my $skip_file = "MANIFEST.SKIP";
 
@@ -42,6 +46,8 @@ sub manifest_skip {
     close OUT;
 
     $self->clean_files('MANIFEST');
+    $self->clean_files('MANIFEST.SKIP')
+        if grep /^clean$/, @_;
 }
 
 sub _skip_files {
@@ -53,6 +59,7 @@ sub _skip_files {
 ^pod2htm.*
 ^MANIFEST\.SKIP$
 ^MANIFEST\.bak$
+^xt/
 ^\.git/
 ^\.gitignore
 ^\.gitmodules
@@ -63,6 +70,7 @@ sub _skip_files {
 ^core$
 ^out$
 ^tmon.out$
+^.devel-local$
 ^\w$
 ^foo.*
 ^notes
@@ -79,6 +87,3 @@ sub _skip_files {
 
 1;
 
-=encoding utf8
-
-#line 135
